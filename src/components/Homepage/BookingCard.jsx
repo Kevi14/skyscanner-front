@@ -6,7 +6,7 @@ const BookingCard = () => {
     return(
         <div className="w-[75%] h-[500px] absolute top-1/2 left-1/2 transform -translate-x-1/2 translate-y-[10%]">
             <Tabs className="w-full bg-black bg-opacity-50" value="" onChange={()=>{}} aria-label="basic tabs example">
-                <Tab label="Item One" value="1" className=""/>
+                <Tab label="Item One" value="1" className="text-white"/>
                 <Tab label="Item Two" value="2" />
                 <Tab label="Item Three" value="3" />
             </Tabs>

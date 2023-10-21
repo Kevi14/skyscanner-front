@@ -1,15 +1,18 @@
-import { useDispatch as useReduxDispatch, useSelector as useReduxSelector } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import rootReducer from './root-reducer';
 
-import { enableDevTools } from 'src/config';
+const persistConfig = {
+    key: 'root',
+    storage,
+};
 
-import { rootReducer } from './root-reducer';
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-    reducer: rootReducer,
-    devTools: enableDevTools
+    reducer: persistedReducer,
 });
 
-export const useSelector = useReduxSelector;
+export const persistor = persistStore(store);
 
-export const useDispatch = () => useReduxDispatch();

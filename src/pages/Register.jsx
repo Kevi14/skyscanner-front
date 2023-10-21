@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
-import SvgIcon from '@mui/material/SvgIcon';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import api from "../api/api.js";
+import Card from "@mui/material/Card";
 const Register = () => {
     const [formData, setFormData] = useState({
         role: 'customer',
@@ -76,25 +75,7 @@ const Register = () => {
     };
 
     return (
-        <div>
-            <Box sx={{ mb: 4 }}>
-                <Link
-                    color="text.primary"
-                    href="/"
-                    sx={{
-                        alignItems: 'center',
-                        display: 'inline-flex',
-                    }}
-                    underline="hover"
-                >
-                    <SvgIcon sx={{ mr: 1 }}>
-                        Leftt
-                    </SvgIcon>
-                    <Typography variant="subtitle2">
-                        Dashboard
-                    </Typography>
-                </Link>
-            </Box>
+        <Card className="h-full mx-[15%] p-8 mt-[5%]">
             <Stack
                 sx={{ mb: 4 }}
                 spacing={1}
@@ -205,7 +186,7 @@ const Register = () => {
                 </Button>
             </form>
 
-        </div>
+        </Card>
     );
 };
 

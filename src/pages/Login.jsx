@@ -1,22 +1,26 @@
-import React, { useState } from 'react';
-import Box from '@mui/material/Box';
+import { useState } from 'react';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
-import SvgIcon from '@mui/material/SvgIcon';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import Card from '@mui/material/Card';
 import api from "../api/api.js";
-
+import {useDispatch} from 'react-redux'
 const initialValues = {
     email: '',
     password: '',
 };
 
 const Login = () => {
+    const dispatch = useDispatch();
+
     const [values, setValues] = useState(initialValues);
     const [error, setError] = useState(null);
 
+    // const handleUpdate = () => {
+    //     dispatch(updateData({ newData: 'Updated Data' }));
+    // };
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setValues({
@@ -35,29 +39,13 @@ const Login = () => {
             })
             .catch((err) => {
                 // Handle login errors, e.g., display an error message
+                console.log(err)
                 setError('Login failed. Please check your credentials.');
             });
     };
 
     return (
-        <div className="grid grid-cols-2">
-            <div className="w-full h-full">
-                <Box sx={{ mb: 4 }}>
-                    <Link
-                        sx={{
-                            alignItems: 'center',
-                            display: 'inline-flex',
-                        }}
-                        underline="hover"
-                    >
-                        <SvgIcon sx={{ mr: 1 }}>
-                            Left Icon
-                        </SvgIcon>
-                        <Typography variant="subtitle2">
-                            Dashboard
-                        </Typography>
-                    </Link>
-                </Box>
+        <Card className="h-full mx-[15%] p-8 mt-[5%]">
                 <Stack
                     sx={{ mb: 4 }}
                     spacing={1}
@@ -72,7 +60,7 @@ const Login = () => {
                         Don't have an account?
                         &nbsp;
                         <Link
-                            href="#"
+                            href="/register"
                             underline="hover"
                             variant="subtitle2"
                         >
@@ -117,18 +105,8 @@ const Login = () => {
                     >
                         Continue
                     </Button>
-                    <Box sx={{ mt: 3 }}>
-                        <Link
-                            href="#"
-                            underline="hover"
-                            variant="subtitle2"
-                        >
-                            Forgot password?
-                        </Link>
-                    </Box>
                 </form>
-            </div>
-        </div>
+            </Card>
     );
 };
 
