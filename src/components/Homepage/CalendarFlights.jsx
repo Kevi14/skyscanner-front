@@ -1,9 +1,12 @@
 import {useState} from 'react';
 import { Button, IconButton, Typography } from '@mui/material';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
-import { TextField, Checkbox, Slider } from '@mui/material';
+import { TextField, Checkbox } from '@mui/material';
 import api from "../../api/api.js";
 import { Autocomplete } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { setFlightDetails } from '../../slice/flightDetailsSlice.js';
+import SwapVertIcon from '@mui/icons-material/SwapVert';
 const cities = [
     "New York City",
     "London",
@@ -18,8 +21,9 @@ export default function FlightPicker() {
     const [arrivalState, setArrivalState] = useState('');
     const [flights, setFlights] = useState([]); // Store the flights data
     const [searched, setSearched] = useState(false);
-
+    const dispatch = useDispatch()
     const currentDate = new Date();
+    console.log(departureState,arrivalState)
     const daysInMonth = (month, year) => new Date(year, month, 0).getDate();
 
     const startingDay = (month, year) => new Date(year, month - 1, 1).getDay();
@@ -33,7 +37,11 @@ export default function FlightPicker() {
         }
         setDate(newDate);
     }
-
+    const handleSwap = () => {
+        let temp = departureState;
+        setDepartureState(arrivalState);
+        setArrivalState(temp);
+    };
     const monthDays = daysInMonth(date.getMonth() + 1, date.getFullYear());
     const previousMonthDays = daysInMonth(date.getMonth(), date.getFullYear());
     const startDay = startingDay(date.getMonth() + 1, date.getFullYear());
@@ -41,11 +49,12 @@ export default function FlightPicker() {
         api.get(`flights/?origin_city=${departureState}&destination_city=${arrivalState}`)
             .then(response => {
                 // Filter out flights with a departure date earlier than the current date
-                const relevantFlights = response.data.filter(flight =>
+                const relevantFlights = response.data.data.filter(flight =>
                     new Date(flight.departure_date) > currentDate
                 );
                 setFlights(relevantFlights);
                 setSearched(true);
+                setSelectedDay(null);
             })
             .catch(error => {
                 console.error("Error fetching flight data:", error);
@@ -57,9 +66,8 @@ export default function FlightPicker() {
             new Date(flight.departure_date).getMonth() === date.getMonth() &&
             new Date(flight.departure_date).getFullYear() === date.getFullYear()
         );
-        return flightOnDay ? `€${Math.floor(Math.random() * 1000)}` : null;
+        return flightOnDay ? `€${flightOnDay.price}` : null;
     }
-
 
     return (
         <>
@@ -87,6 +95,7 @@ export default function FlightPicker() {
                                     value={departureState}
                                 />
                             )}
+                            value={departureState}
                         />
 
                         <Autocomplete
@@ -102,27 +111,20 @@ export default function FlightPicker() {
                                     value={arrivalState}
                                 />
                             )}
+                            value={arrivalState}
                         />
-
-                        <Button variant="contained"  onClick={fetchCalendar}>Search</Button>
-                    </div>
+                        <div className="flex flex-row">
+                            <Button variant="contained" fullWidth onClick={handleSwap} sx={{mr:1}}><SwapVertIcon/> Swap</Button>
+                            <Button variant="contained" fullWidth onClick={fetchCalendar}>Search</Button>
+                        </div>
+                     </div>
 
                     {/* Options */}
                     <div className="flex mb-4">
                         <div>
-                            <Checkbox />
+                            <Checkbox checked={true} disabled={true}/>
                             <label>One way</label>
                         </div>
-                        <div>
-                            <Checkbox />
-                            <label>Direct flights only</label>
-                        </div>
-                    </div>
-
-                    {/* Duration */}
-                    <div className="mb-4 ">
-                        <label>Vacation duration</label>
-                        <Slider valueLabelDisplay="auto" min={7} max={14} defaultValue={7} className="mt-2" />
                     </div>
                 </div>
 
@@ -159,17 +161,24 @@ export default function FlightPicker() {
                         ))}
 
                         {Array.from({ length: monthDays }).map((_, index) => {
-                            const flightDateMatches = flights.some(flight =>
+                            const flightOnDay = flights.find(flight =>
                                 new Date(flight.departure_date).getDate() === index + 1 &&
                                 new Date(flight.departure_date).getMonth() === date.getMonth() &&
                                 new Date(flight.departure_date).getFullYear() === date.getFullYear()
                             );
-                            const isClickable = searched && flightDateMatches;
+                            const isClickable = searched && flightOnDay;
 
                             return (
                                 <div
                                     key={index}
-                                    onClick={isClickable ? () => { setSelectedDay(index + 1) } : null}
+                                    onClick={isClickable ? () => {
+                                        setSelectedDay(index + 1);
+                                        dispatch(setFlightDetails({
+                                            departure: departureState,
+                                            arrival: arrivalState,
+                                            price: flightOnDay.price,
+                                        }));
+                                    } : null}
                                     className={`border p-4 cursor-pointer ${!isClickable ? 'text-gray-400' : selectedDay === (index + 1) ? 'bg-green-400' : 'bg-white'}`}
                                 >
                                     <div className="text-center">{index + 1}</div>
