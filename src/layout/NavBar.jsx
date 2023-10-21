@@ -48,7 +48,7 @@ const NavBar = ()=>{
     return (
         <>
             <AppBar position="static" sx={{backgroundColor:"#0D3A8A"}}>
-                <Container maxWidth="xl">
+                <div className="mx-[12%]">
                     <Toolbar disableGutters>
                         <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} onClick={()=> navigate('/')} className="cursor-pointer" >
                             <img className="aspect-auto w-24" src="/mindspacelogo2.png" alt="logo" />
@@ -91,7 +91,7 @@ const NavBar = ()=>{
                             </Menu>
                         </Box>
                         <Box sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} >
-                            <img className="" src="/mindspacelogo2.png" alt="logo" />
+                            <img className="aspect-auto w-24" src="/mindspacelogo2.png" alt="logo" />
                         </Box>
                         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                             {pages.map((page) => (
@@ -109,12 +109,10 @@ const NavBar = ()=>{
                             isAuthenticated
                                 ?
                                 <Box sx={{ flexGrow: 0 }}>
-                                    <Tooltip title="Open settings">
-
-                                            <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
-                                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg"/>
-                                            </IconButton>
-
+                                    <Tooltip title="Open profile">
+                                        <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
+                                            <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg"/>
+                                        </IconButton>
                                     </Tooltip>
                                     <Menu
                                         sx={{ mt: '45px' }}
@@ -149,7 +147,7 @@ const NavBar = ()=>{
                                 </Button>
                         }
                     </Toolbar>
-                </Container>
+                </div>
             </AppBar>
             <Outlet/>
         </>

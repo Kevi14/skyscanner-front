@@ -9,6 +9,7 @@ import Home from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import Rewards from "./pages/Rewards.jsx";
+import Footer from "./components/Shared/Footer.jsx";
 function App() {
 
     const router = createBrowserRouter(
@@ -25,6 +26,7 @@ function App() {
   return (
     <>
         <RouterProvider router={router}/>
+        <Footer />
     </>
   )
 }
