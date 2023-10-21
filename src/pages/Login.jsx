@@ -41,7 +41,7 @@ const Login = () => {
         api.post('auth/login', values)
             .then((response) => {
                 // Handle successful login, e.g., store user data or redirect
-                dispatch(setAuthToken(response.data.access))
+                dispatch(setAuthToken(response.data.data.access))
                 navigate('/')
             })
             .catch((err) => {
@@ -53,7 +53,7 @@ const Login = () => {
 
     return (
         <>
-            {isAuthenticated ?
+            {!isAuthenticated ?
                 <Card className="h-full mx-[15%] p-8 mt-[5%]">
                     <Stack
                         sx={{mb: 4}}

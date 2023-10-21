@@ -1,37 +1,39 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { TextField, Button, Tabs, Tab, Radio, RadioGroup, FormControlLabel, FormControl, Select, MenuItem, InputLabel } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
- 
 import axios from "axios"; 
+import api from '../../api/api';
 const BookingCard = ({bookingCardRef}) => {
     const [from, setFrom] = useState('Singapore'); // Default value set to 'Singapore'
     const [to, setTo] = useState('');
     const [departureDate, setDepartureDate] = useState('');
+    const access = useSelector(state=>state.auth.token); // Replace with your actual access token or its retrieval logic
+
     const handleBooking = async () => {
-        // try {
-        //     const access = "YOUR_ACCESS_TOKEN"; // Replace with your actual access token or its retrieval logic
-        //     const response = await axios.post('https://your-api-url/bookings/', 
-        //         {
-        //             departure_location: 'JFK',
-        //             arrival_location: 'LAX',
-        //             departure_date: '2023-11-01'
-        //         },
-        //         {
-        //             headers: {
-        //                 'Authorization': `Bearer ${access}`,
-        //                 'Content-Type': 'application/json'
-        //             }
-        //         }
-        //     );
-        //     console.log("Booking successful:", response.data);
-        //     // Handle the successful response (e.g. show a confirmation message)
-        // } catch (error) {
-        //     console.error("Booking failed:", error);
-        //     // Handle the error (e.g. show an error message to the user)
-        // }
-        console.log()
+        console.log(from,to,departureDate)
+        try {
+            const response = await api.post('/bookings/', 
+                {
+                    departure_location: from,
+                    arrival_location: to,
+                    departure_date: departureDate,
+                },
+                {
+                    headers: {
+                        'Authorization': `Bearer ${access}`,
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+            console.log("Booking successful:", response.data);
+            // Handle the successful response (e.g. show a confirmation message)
+        } catch (error) {
+            console.error("Booking failed:", error);
+            // Handle the error (e.g. show an error message to the user)
+        }
     };
     return(
         <div ref={bookingCardRef} className="w-[75%] min-h-[300px] absolute top-1/2 left-1/2 transform -translate-x-1/2 translate-y-[10%] shadow-lg">
