@@ -14,7 +14,7 @@ const cities = [
     "Tirana"
 ];
 
-export default function FlightPicker() {
+export default function FlightPicker({bookingCardRef}) {
     const [date, setDate] = useState(new Date());
     const [selectedDay, setSelectedDay] = useState(null);
     const [departureState, setDepartureState] = useState('');
@@ -173,6 +173,7 @@ export default function FlightPicker() {
                                     key={index}
                                     onClick={isClickable ? () => {
                                         setSelectedDay(index + 1);
+                                        bookingCardRef.current.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'start' })
                                         dispatch(setFlightDetails({
                                             departure: departureState,
                                             arrival: arrivalState,

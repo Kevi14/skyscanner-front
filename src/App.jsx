@@ -10,6 +10,7 @@ import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import Rewards from "./pages/Rewards.jsx";
 import Footer from "./components/Shared/Footer.jsx";
+import Profile from "./pages/Profile.jsx";
 function App() {
 
     const router = createBrowserRouter(
@@ -19,6 +20,7 @@ function App() {
                 <Route path="login" element={<Login />} />
                 <Route path="register" element={<Register />} />
                 <Route path="rewards" element={<Rewards />} />
+                <Route path="profile" element={<Profile />} />
             </Route>
         )
     )

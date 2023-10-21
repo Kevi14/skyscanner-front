@@ -1,77 +1,54 @@
-import React, { useState } from 'react';
+import React from 'react';
+import Card from "@mui/material/Card";
+import {AccountCircle, LocalPlay, Logout} from '@mui/icons-material';
+import {useDispatch, useSelector} from "react-redux";
+import {setSelectedTab} from "../slice/profileSlice.js";
+import UserData from "../components/Profile/UserData.jsx";
+import MyTickets from "../components/Profile/MyTickets.jsx";
+import Avatar from "@mui/material/Avatar";
+import {clearAuthToken} from "../slice/authSlice.js";
+import {useNavigate} from "react-router-dom";
 
-const UserProfileComponent = ({ initialData }) => {
-    const [userData, setUserData] = useState(initialData);
-
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setUserData({
-            ...userData,
-            [name]: value,
-        });
-    };
-
-    const handleSubmit = () => {
-    };
+const Profile = () => {
+    const selectedTab = useSelector(state => state.profile.selectedTab)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     return (
-        <div className="user-profile">
-            <h2>User Profile</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>User Type:</label>
-                    <select name="user_type" value={userData?.user_type} onChange={handleInputChange}>
-                        <option value="1">Customer</option>
-                        <option value="2">Provider</option>
-                    </select>
+        <Card className="mx-[13%] mt-[5%] mb-20 grid grid-cols-9 p-4 border border-2 border-[#0D3A8A]">
+            <div className="col-span-3 flex flex-col items-center  border-r-2 border-r-[#0D3A8A]">
+                <Avatar className="mx-auto my-4" sx={{ width: 80, height: 80 }}>
+                    <AccountCircle sx={{ fontSize: 80 }} />
+                </Avatar>
+                <h2 className="text-2xl my-6">Admin admin</h2>
+                <div onClick={()=>{dispatch(setSelectedTab("userData"))}}
+                     className={`w-52 h-52 my-5 flex items-center justify-center border-2 cursor-pointer ${selectedTab === "userData" ? "bg-[#0D3A8A] border-white text-white" : "border-[#0D3A8A] text-[#0D3A8A] bg-white" }`}>
+                    <div className="text-center text-2xl">
+                        <AccountCircle /> User Data
+                    </div>
                 </div>
-                <div>
-                    <label>First Name:</label>
-                    <input type="text" name="first_name" value={userData?.first_name} onChange={handleInputChange} />
+                <div onClick={()=>{dispatch(setSelectedTab("myTickets"))}}  className={`w-52 h-52 my-5 flex items-center justify-center border-2 border-[#0D3A8A] cursor-pointer ${selectedTab === "myTickets" ? "bg-[#0D3A8A] border-white text-white" : "border-[#0D3A8A] text-[#0D3A8A] bg-white" } `}>
+                    <div className="text-center">
+                        <LocalPlay /> My Tickets
+                    </div>
                 </div>
-                <div>
-                    <label>Last Name:</label>
-                    <input type="text" name="last_name" value={userData?.last_name} onChange={handleInputChange} />
+                <div onClick={()=>{
+                        navigate('/')
+                        dispatch(clearAuthToken())
+                    }}
+                     className="w-52 h-52 my-5 flex items-center justify-center border-2 border-[#0D3A8A] cursor-pointer "
+                >
+                    <div className="text-center border-[#0D3A8A] text-[#0D3A8A]">
+                        <Logout /> Logout
+                    </div>
                 </div>
-                <div>
-                    <label>Email:</label>
-                    <input type="email" name="email" value={userData?.email} onChange={handleInputChange} disabled />
-                </div>
-                <div>
-                    <label>Phone:</label>
-                    <input type="tel" name="phone" value={userData?.phone} onChange={handleInputChange} />
-                </div>
-                <div>
-                    <label>Frequent Flyer Number:</label>
-                    <input type="text" name="frequent_flyer_number" value={userData?.frequent_flyer_number} onChange={handleInputChange} />
-                </div>
-                <div>
-                    <label>Date of Birth:</label>
-                    <input type="date" name="date_of_birth" value={userData?.date_of_birth} onChange={handleInputChange} />
-                </div>
-                <div>
-                    <label>Street:</label>
-                    <input type="text" name="street" value={userData?.address.street} onChange={handleInputChange} />
-                </div>
-                <div>
-                    <label>City:</label>
-                    <input type="text" name="city" value={userData?.address.city} onChange={handleInputChange} />
-                </div>
-                <div>
-                    <label>Postal Code:</label>
-                    <input type="text" name="postal_code" value={userData?.address.postal_code} onChange={handleInputChange} />
-                </div>
-                <div>
-                    <label>Document Type:</label>
-                    <select name="documentType" value={userData?.document.type} onChange={handleInputChange}>
-                        <option value="PASSPORT">PASSPORT</option>
-                        <option value="NATIONAL_ID">NATIONAL_ID</option>
-                    </select>
-                </div>
-                <button type="submit">Update Profile</button>
-            </form>
-        </div>
+            </div>
+            {selectedTab === "userData" && <UserData />}
+            {selectedTab === "myTickets" && <MyTickets />}
+
+
+        </Card>
     );
 };
 
-export default UserProfileComponent;
+export default Profile;

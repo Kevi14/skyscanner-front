@@ -6,7 +6,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import axios from "axios"; 
 import api from '../../api/api';
-const BookingCard = ({bookingCardRef}) => {
+const BookingCard = ({ bookingCardRef }) => {
     const [from, setFrom] = useState('Singapore'); // Default value set to 'Singapore'
     const [to, setTo] = useState('');
     const [departureDate, setDepartureDate] = useState('');

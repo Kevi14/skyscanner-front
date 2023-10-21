@@ -12,9 +12,10 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import {useDispatch, useSelector} from 'react-redux';
-const pages = ['Products', 'Pricing', 'Blog'];
+const pages = [];
 import {clearAuthToken} from "../slice/authSlice.js";
 import {Outlet, useNavigate} from 'react-router-dom';
+import {setSelectedTab} from "../slice/profileSlice.js";
 
 const NavBar = ()=>{
     const navigate = useNavigate()
@@ -23,8 +24,15 @@ const NavBar = ()=>{
     const [anchorElUser, setAnchorElUser] = useState(null);
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const settings = [
-        {label:'Profile',link:'/profile',onClick:()=>{navigate('/profile')}},
-        {label:'Rewards',link:'/reward',onClick:()=>{navigate('/reward')}},
+        {label:'UserData',link:'/profile',onClick:()=>{
+            navigate('/profile')
+                dispatch(setSelectedTab("userData"))
+        }},
+        {label:'MyTickets',link:'/profile',onClick:()=>{
+            navigate('/profile')
+                dispatch(setSelectedTab("myTickets"))
+        }},
+        {label:'Rewards',link:'/rewards',onClick:()=>{navigate('/rewards')}},
         {label:'Logout',link:'/',onClick:()=>{
             dispatch(clearAuthToken())
                 navigate('/')
@@ -51,57 +59,19 @@ const NavBar = ()=>{
                 <div className="mx-[12%]">
                     <Toolbar disableGutters>
                         <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} onClick={()=> navigate('/')} className="cursor-pointer" >
-                        <img 
-    className="aspect-auto w-24 filter invert brightness-2" 
-    src="/mindspacelogo2.png" 
-    alt="logo" 
-/>
-
+                            <img
+                                className="aspect-auto w-24 filter invert brightness-2"
+                                src="/mindspacelogo2.png"
+                                alt="logo"
+                            />
                         </Box>
 
-                        <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-                            <IconButton
-                                size="large"
-                                aria-label="account of current user"
-                                aria-controls="menu-appbar"
-                                aria-haspopup="true"
-                                onClick={handleOpenNavMenu}
-                                color="inherit"
-                            >
-                                <MenuIcon />
-                            </IconButton>
-                            <Menu
-                                id="menu-appbar"
-                                anchorEl={anchorElNav}
-                                anchorOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'left',
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'left',
-                                }}
-                                open={Boolean(anchorElNav)}
-                                onClose={handleCloseNavMenu}
-                                sx={{
-                                    display: { xs: 'block', md: 'none' },
-                                }}
-                            >
-                                {pages.map((page) => (
-                                    <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                        <Typography textAlign="center">{page}</Typography>
-                                    </MenuItem>
-                                ))}
-                            </Menu>
-                        </Box>
                         <Box sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} >
-                        <img 
-    className="aspect-auto w-24 filter invert brightness-2" 
-    src="/mindspacelogo2.png" 
-    alt="logo" 
-/>
-
+                            <img
+                                className="aspect-auto w-24 filter invert brightness-2"
+                                src="/mindspacelogo2.png"
+                                alt="logo"
+                            />
                         </Box>
                         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                             {pages.map((page) => (

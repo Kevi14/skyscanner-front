@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body{
-    min-height: 150vh;
+    min-height: 100vh;
 }
 
 /* Style the scrollbar */
