@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
 const images = [
-    '/banner1.jpg',
-    '/banner2.jpg'
+    '/banner2.jpg',
+    '/banner3.jpg',
+    '/banner4.jpg',
+    '/banner5.jpg',
+    '/banner6.jpg',
+
 ];
 // eslint-disable-next-line react/prop-types
 const Banner = ({ interval = 10000 }) => {

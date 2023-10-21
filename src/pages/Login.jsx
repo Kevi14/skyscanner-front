@@ -50,22 +50,6 @@ const Login = () => {
       });
   };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        api.post('auth/login', values)
-            .then((response) => {
-                // Handle successful login, e.g., store user data or redirect
-                dispatch(setAuthToken(response.data.data.access))
-                navigate('/')
-            })
-            .catch((err) => {
-                // Handle login errors, e.g., display an error message
-                console.log(err)
-                setError('Login failed. Please check your credentials.');
-            });
-    };
-
     return (
         <>
             {!isAuthenticated ?
