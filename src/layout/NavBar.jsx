@@ -51,7 +51,12 @@ const NavBar = ()=>{
                 <div className="mx-[12%]">
                     <Toolbar disableGutters>
                         <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} onClick={()=> navigate('/')} className="cursor-pointer" >
-                            <img className="aspect-auto w-24" src="/mindspacelogo2.png" alt="logo" />
+                        <img 
+    className="aspect-auto w-24 filter invert brightness-2" 
+    src="/mindspacelogo2.png" 
+    alt="logo" 
+/>
+
                         </Box>
 
                         <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -91,7 +96,12 @@ const NavBar = ()=>{
                             </Menu>
                         </Box>
                         <Box sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} >
-                            <img className="aspect-auto w-24" src="/mindspacelogo2.png" alt="logo" />
+                        <img 
+    className="aspect-auto w-24 filter invert brightness-2" 
+    src="/mindspacelogo2.png" 
+    alt="logo" 
+/>
+
                         </Box>
                         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                             {pages.map((page) => (
