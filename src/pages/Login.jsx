@@ -1,39 +1,54 @@
-import {useEffect, useState} from 'react';
-import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
-import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import Card from '@mui/material/Card';
+import { useEffect, useState } from "react";
+import Button from "@mui/material/Button";
+import Link from "@mui/material/Link";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import Card from "@mui/material/Card";
 import api from "../api/api.js";
-import {useDispatch,useSelector} from 'react-redux'
-import {setAuthToken} from "../slice/authSlice.js";
-import {useNavigate} from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setAuthToken } from "../slice/authSlice.js";
+import { useNavigate } from "react-router-dom";
 const initialValues = {
-    email: '',
-    password: '',
+  email: "",
+  password: "",
 };
 
 const Login = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate()
-    const [values, setValues] = useState(initialValues);
-    const [error, setError] = useState(null);
-    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [values, setValues] = useState(initialValues);
+  const [error, setError] = useState(null);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
+  useEffect(() => {
+    if (isAuthenticated) navigate("/");
+  }, []);
 
-    useEffect(() => {
-       if(isAuthenticated) navigate('/')
-    }, []);
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setValues({
+      ...values,
+      [name]: value,
+    });
+  };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setValues({
-            ...values,
-            [name]: value,
-        });
-    };
+    api
+      .post("auth/login", values)
+      .then((response) => {
+        // Handle successful login, e.g., store user data or redirect
+        dispatch(setAuthToken(response.data.data.access));
+        navigate("/");
+      })
+      .catch((err) => {
+        // Handle login errors, e.g., display an error message
+        console.log(err);
+        setError("Login failed. Please check your credentials.");
+      });
+  };
 
     const handleSubmit = (e) => {
         e.preventDefault();
