@@ -8,6 +8,7 @@ import {
 import Home from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
+import Rewards from "./pages/Rewards.jsx";
 function App() {
 
     const router = createBrowserRouter(
@@ -16,6 +17,7 @@ function App() {
                 <Route index element={<Home />} />
                 <Route path="login" element={<Login />} />
                 <Route path="register" element={<Register />} />
+                <Route path="rewards" element={<Rewards />} />
             </Route>
         )
     )
