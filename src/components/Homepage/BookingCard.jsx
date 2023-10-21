@@ -1,8 +1,38 @@
+import React, { useState } from 'react';
 import { TextField, Button, Tabs, Tab, Radio, RadioGroup, FormControlLabel, FormControl, Select, MenuItem, InputLabel } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
+ 
+import axios from "axios"; 
 const BookingCard = ({bookingCardRef}) => {
+    const [from, setFrom] = useState('Singapore'); // Default value set to 'Singapore'
+    const [to, setTo] = useState('');
+    const [departureDate, setDepartureDate] = useState('');
+    const handleBooking = async () => {
+        // try {
+        //     const access = "YOUR_ACCESS_TOKEN"; // Replace with your actual access token or its retrieval logic
+        //     const response = await axios.post('https://your-api-url/bookings/', 
+        //         {
+        //             departure_location: 'JFK',
+        //             arrival_location: 'LAX',
+        //             departure_date: '2023-11-01'
+        //         },
+        //         {
+        //             headers: {
+        //                 'Authorization': `Bearer ${access}`,
+        //                 'Content-Type': 'application/json'
+        //             }
+        //         }
+        //     );
+        //     console.log("Booking successful:", response.data);
+        //     // Handle the successful response (e.g. show a confirmation message)
+        // } catch (error) {
+        //     console.error("Booking failed:", error);
+        //     // Handle the error (e.g. show an error message to the user)
+        // }
+        console.log()
+    };
     return(
         <div ref={bookingCardRef} className="w-[75%] min-h-[300px] absolute top-1/2 left-1/2 transform -translate-x-1/2 translate-y-[10%] shadow-lg">
             <Tabs className="w-full bg-black bg-opacity-50 flex" value="" onChange={()=>{}} aria-label="basic tabs example">
@@ -26,12 +56,14 @@ const BookingCard = ({bookingCardRef}) => {
                 </div>
 
                 <div className="grid grid-cols-4 gap-2 mb-4">
-                    <TextField
-                        label="FROM"
-                        defaultValue="Tirana"
-                        variant="outlined"
-                        size="small"
-                        fullWidth
+
+                <TextField
+                    label="FROM"
+                    value={from} // Use the state variable as value
+                    onChange={(e) => setFrom(e.target.value)} // Update state on change
+                    variant="outlined"
+                    size="small"
+                    fullWidth
                         InputProps={{
                            endAdornment: (
                                <InputAdornment position="end">
@@ -45,20 +77,24 @@ const BookingCard = ({bookingCardRef}) => {
                            )
                         }}
                     />
-                    <TextField
-                        label="To"
-                        fullWidth
-                        variant="outlined"
-                        size="small"
+                   <TextField
+                    label="To"
+                    value={to} // Use the state variable as value
+                    onChange={(e) => setTo(e.target.value)} // Update state on change
+                    fullWidth
+                    variant="outlined"
+                    size="small"
                     />
-                    <TextField
-                        type="date"
-                        label="Depart Date"
-                        variant="outlined"
-                        fullWidth
-                        className="mr-2"
-                        size="small"
-                        InputLabelProps={{ shrink: true }}
+                     <TextField
+                    type="date"
+                    label="Depart Date"
+                    value={departureDate} // Use the state variable as value
+                    onChange={(e) => setDepartureDate(e.target.value)} // Update state on change
+                    variant="outlined"
+                    fullWidth
+                    className="mr-2"
+                    size="small"
+                    InputLabelProps={{ shrink: true }}
                     />
                     <FormControl variant="outlined" size="small" style={{ minWidth: '120px' }}>
                         <InputLabel>CLASS</InputLabel>
@@ -72,7 +108,8 @@ const BookingCard = ({bookingCardRef}) => {
                 <div className="grid-cols-4 gap-2 grid mb-4">
 
                     <TextField fullWidth variant="outlined" size="small" placeholder="Apply promo code" />
-                    <Button variant="contained" color="primary" size="large">BUY NOW</Button>
+                    <Button variant="contained" color="primary" size="large" onClick={handleBooking}>BUY NOW</Button>
+
                 </div>
 
             </div>
