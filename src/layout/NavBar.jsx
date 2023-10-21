@@ -11,18 +11,25 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { useSelector } from 'react-redux';
-
+import {useDispatch, useSelector} from 'react-redux';
 const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-import { Outlet } from 'react-router-dom';
-const NavBar = ()=>{
+import {clearAuthToken} from "../slice/authSlice.js";
+import {Outlet, useNavigate} from 'react-router-dom';
 
+const NavBar = ()=>{
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-    const token = useSelector((state) => state.auth.token);
-
+    const settings = [
+        {label:'Profile',link:'/profile',onClick:()=>{navigate('/profile')}},
+        {label:'Rewards',link:'/reward',onClick:()=>{navigate('/reward')}},
+        {label:'Logout',link:'/',onClick:()=>{
+            dispatch(clearAuthToken())
+                navigate('/')
+        }}
+    ];
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
@@ -43,7 +50,7 @@ const NavBar = ()=>{
             <AppBar position="static" sx={{backgroundColor:"#0D3A8A"}}>
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
-                        <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} >
+                        <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} onClick={()=> navigate('/')} className="cursor-pointer" >
                             <img className="aspect-auto w-24" src="/mindspacelogo2.png" alt="logo" />
                         </Box>
 
@@ -126,8 +133,8 @@ const NavBar = ()=>{
                                         onClose={handleCloseUserMenu}
                                     >
                                         {settings.map((setting) => (
-                                            <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                                <Typography textAlign="center">{setting}</Typography>
+                                            <MenuItem key={setting.label} onClick={setting.onClick}>
+                                                <Typography textAlign="center">{setting.label}</Typography>
                                             </MenuItem>
                                         ))}
                                     </Menu>

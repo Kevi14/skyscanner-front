@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
@@ -8,6 +8,8 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import api from "../api/api.js";
 import Card from "@mui/material/Card";
+import {useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
 const Register = () => {
     const [formData, setFormData] = useState({
         role: 'customer',
@@ -17,8 +19,14 @@ const Register = () => {
         password: '',
         password2: '',
     });
-
+    const navigate = useNavigate()
     const [errors, setErrors] = useState({});
+    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+
+    useEffect(() => {
+        if(isAuthenticated) navigate('/')
+    }, []);
 
     const validateForm = () => {
         const newErrors = {};
