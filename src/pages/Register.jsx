@@ -82,7 +82,7 @@ const Register = () => {
   };
 
   return (
-    <Card className="h-full mx-[15%] p-8 mt-[5%]">
+    <Card className="h-full mx-[15%] p-8 mt-[5%] mb-36">
       <Stack sx={{ mb: 4 }} spacing={1}>
         <Typography variant="h5">Register</Typography>
         <Typography color="text.secondary" variant="body2">
