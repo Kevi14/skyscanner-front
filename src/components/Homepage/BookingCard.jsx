@@ -4,13 +4,17 @@ import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 const BookingCard = () => {
     return(
-        <div className="w-[75%] h-[500px] absolute top-1/2 left-1/2 transform -translate-x-1/2 translate-y-[10%]">
-            <Tabs className="w-full bg-black bg-opacity-50" value="" onChange={()=>{}} aria-label="basic tabs example">
-                <Tab label="Item One" value="1" className="text-white"/>
-                <Tab label="Item Two" value="2" />
-                <Tab label="Item Three" value="3" />
+        <div className="w-[75%] min-h-[300px] absolute top-1/2 left-1/2 transform -translate-x-1/2 translate-y-[10%] shadow-lg">
+            <Tabs className="w-full bg-black bg-opacity-50 flex" value="" onChange={()=>{}} aria-label="basic tabs example">
+                <Tab label="Item One" value="1" style={{ color: 'white', flexGrow: 1 }}/>
+                <Tab label="Item Two" value="2" style={{ color: 'white', flexGrow: 1 }}/>
+                <Tab label="Item Three" value="3" style={{ color: 'white', flexGrow: 1 }}/>
+                <Tab label="Item four" value="3" style={{ color: 'white', flexGrow: 1 }}/>
+                <Tab label="Item five" value="3" style={{ color: 'white', flexGrow: 1 }}/>
             </Tabs>
-            <div className="p-8 bg-gray-50">
+
+
+            <div className="p-8 bg-gray-50 h-full">
                 <h1 className="text-xl mb-4">Hi, where would you like to go?</h1>
 
                 <div className="flex items-center mb-4 space-x-4">

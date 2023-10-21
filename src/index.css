@@ -5,3 +5,19 @@
 body{
     min-height: 150vh;
 }
+
+/* Style the scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Handle or Thumb */
+::-webkit-scrollbar-thumb {
+    background-color: #0D3A8A;
+    border-radius: 8px;
+}
+
+/* Handle or Thumb on hover */
+::-webkit-scrollbar-thumb:hover {
+    background-color: #0D3A8A;
+}
