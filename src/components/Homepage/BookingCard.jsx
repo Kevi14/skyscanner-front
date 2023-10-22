@@ -25,11 +25,38 @@ const BookingCard = ({ bookingCardRef }) => {
   const [to, setTo] = useState("");
   const [flightClass, setFlightClass] = useState("Economy");
   const [departureDate, setDepartureDate] = useState("");
+  const [promoCode, setPromoCode] = useState("");
+  const [isPromoValid, setIsPromoValid] = useState(null);
+  const [promoMessage, setPromoMessage] = useState("");
+
   const access = useSelector((state) => state.auth.token); // Replace with your actual access token or its retrieval logic
   const flightDetails = useSelector((state) => state.flightDetails);
   const { departure, arrival, price, selectedDate, discountedPrice } =
     flightDetails;
 
+  const checkPromoCode = async (code) => {
+    try {
+      const response = await api.get(`promo-code?code=${code}`, {
+        headers: {
+          Authorization: `Bearer ${access}`,
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(response.data.data);
+      // assuming the response contains a 'valid' field that is a boolean
+      if (response.data?.data.length > 0) {
+        setIsPromoValid(true);
+        setPromoMessage("Valid promo code!");
+      } else {
+        setIsPromoValid(false);
+        setPromoMessage("Invalid promo code!");
+      }
+    } catch (error) {
+      console.error("Error checking promo code:", error);
+      setIsPromoValid(false);
+      setPromoMessage("Error checking promo code.");
+    }
+  };
   const handleGetDiscounts = async () => {
     try {
       const response = await api.get("reward-info/generate_promo/", {
@@ -53,6 +80,7 @@ const BookingCard = ({ bookingCardRef }) => {
           departure_location: from,
           arrival_location: to,
           departure_date: departureDate,
+          promo_code: promoCode,
         },
         {
           headers: {
@@ -72,6 +100,7 @@ const BookingCard = ({ bookingCardRef }) => {
     setTo(arrival);
     setDepartureDate(selectedDate);
   }, [departure, arrival, selectedDate]);
+
   return (
     <div
       ref={bookingCardRef}
@@ -195,7 +224,21 @@ const BookingCard = ({ bookingCardRef }) => {
             variant="outlined"
             size="small"
             placeholder="Apply promo code"
+            onChange={(event) => {
+              setPromoCode(event.target.value);
+              checkPromoCode(event.target.value);
+            }}
           />
+          <div>
+            {isPromoValid !== null && (
+              <Typography
+                variant="body2"
+                color={isPromoValid ? "primary" : "error"}
+              >
+                {promoMessage}
+              </Typography>
+            )}
+          </div>
           <div className="flex justify-between px-1 pr-32 items-center border border-1.5 rounded-md border-gray-400">
             <Typography variant="body1">Price</Typography>
             <Typography>{price ? price : "---"} </Typography>
