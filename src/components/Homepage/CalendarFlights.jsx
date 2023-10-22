@@ -173,11 +173,15 @@ export default function FlightPicker({bookingCardRef}) {
                                     key={index}
                                     onClick={isClickable ? () => {
                                         setSelectedDay(index + 1);
-                                        bookingCardRef.current.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'start' })
+                                        bookingCardRef.current.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'start' });
+
+                                        const selectedDate = new Date(date.getFullYear(), date.getMonth(), index + 2); // Construct the selected date
+
                                         dispatch(setFlightDetails({
                                             departure: departureState,
                                             arrival: arrivalState,
                                             price: flightOnDay.price,
+                                            selectedDate: selectedDate.toISOString().split('T')[0], // Format to "YYYY-MM-DD"
                                         }));
                                     } : null}
                                     className={`border p-4 cursor-pointer ${!isClickable ? 'text-gray-400' : selectedDay === (index + 1) ? 'bg-green-400' : 'bg-white'}`}

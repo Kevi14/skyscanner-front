@@ -18,6 +18,7 @@ const Register = () => {
     email: "",
     password: "",
     password2: "",
+    referral_code: "",
   });
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
@@ -36,6 +37,10 @@ const Register = () => {
 
     if (!formData.last_name) {
       newErrors.last_name = "Last name is required";
+    }
+
+    if (formData.referral_code && formData.referral_code.length < 4) {
+      newErrors.referral_code = "Referral code must be at least 4 characters";
     }
 
     if (!formData.email) {
@@ -154,6 +159,15 @@ const Register = () => {
             InputLabelProps={{
               shrink: true,
             }}
+          />
+          <TextField
+            fullWidth
+            label="Referral Code (Optional)"
+            name="referral_code"
+            value={formData.referral_code}
+            onChange={handleInputChange}
+            error={!!errors.referral_code}
+            helperText={errors.referral_code}
           />
         </Stack>
         <Box
