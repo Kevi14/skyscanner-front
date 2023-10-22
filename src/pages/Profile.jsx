@@ -19,23 +19,23 @@ const Profile = () => {
         <Card className="mx-[13%] mt-[5%] mb-20 grid grid-cols-9 p-4 border border-2 border-[#0D3A8A]">
             <div className="col-span-3 flex flex-col items-center  border-r-2 border-r-[#0D3A8A]">
                 <Avatar className="mx-auto my-4" sx={{ width: 80, height: 80 }}>
-                    <AccountCircle sx={{ fontSize: 80 }} />
+                    <AccountCircle fontSize="large" sx={{ fontSize: 100, color:"#0D3A8A" }} />
                 </Avatar>
-                <h2 className="text-2xl my-6">Admin admin</h2>
+                <h2 className="text-2xl font-semibold my-6">Admin Admin</h2>
                 <div onClick={()=>{dispatch(setSelectedTab("userData"))}}
                      className={`w-52 h-32 my-5 flex items-center justify-center border-2 cursor-pointer ${selectedTab === "userData" ? "bg-[#0D3A8A] border-white text-white" : "border-[#0D3A8A] text-[#0D3A8A] bg-white" }`}>
                     <div className="text-center text-2xl">
-                        <AccountCircle /> User Data
+                        <AccountCircle fontSize="large" /> User Data
                     </div>
                 </div>
                 <div onClick={()=>{dispatch(setSelectedTab("myTickets"))}}  className={`w-52 h-32 my-5 flex items-center justify-center border-2 border-[#0D3A8A] cursor-pointer ${selectedTab === "myTickets" ? "bg-[#0D3A8A] border-white text-white" : "border-[#0D3A8A] text-[#0D3A8A] bg-white" } `}>
-                    <div className="text-center">
-                        <LocalPlay /> My Tickets
+                    <div className="text-center text-2xl">
+                        <LocalPlay fontSize="large"/> My Tickets
                     </div>
                 </div>
                 <div onClick={()=>{dispatch(setSelectedTab("referals"))}}  className={`w-52 h-32 my-5 flex items-center justify-center border-2 border-[#0D3A8A] cursor-pointer ${selectedTab === "referals" ? "bg-[#0D3A8A] border-white text-white" : "border-[#0D3A8A] text-[#0D3A8A] bg-white" } `}>
-                    <div className="text-center">
-                        <PersonAddAltIcon /> Referals
+                    <div className="text-center text-2xl">
+                        <PersonAddAltIcon fontSize="large"/> Referals
                     </div>
                 </div>
                 <div onClick={()=>{
@@ -44,8 +44,8 @@ const Profile = () => {
                     }}
                      className="w-52 h-32 my-5 flex items-center justify-center border-2 border-[#0D3A8A] cursor-pointer "
                 >
-                    <div className="text-center border-[#0D3A8A] text-[#0D3A8A]">
-                        <Logout /> Logout
+                    <div className="text-center text-2xl border-[#0D3A8A] text-[#0D3A8A]">
+                        <Logout fontSize="large"/> Logout
                     </div>
                 </div>
             </div>

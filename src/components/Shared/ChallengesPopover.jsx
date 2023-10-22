@@ -30,7 +30,7 @@ const App = () => {
     return (
         <div className="relative w-full h-full">
             <div
-                className="absolute z-50 top-4 right-4 w-10 h-10 bg-blue-500 rounded-full cursor-pointer flex justify-center items-center"
+                className="absolute z-50 top-4 right-4 w-10 h-10 bg-blue-500 hover:bg-[#0D3A8A] rounded-full cursor-pointer flex justify-center items-center"
                 onClick={handleClick}
             ><AdsClickIcon /></div>
 

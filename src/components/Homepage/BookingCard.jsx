@@ -19,7 +19,17 @@ import api from "../../api/api";
 import { toast } from "react-toastify";
 
 const cities = ["New York City", "London", "Rome", "Tirana"];
+const validStyle = {
+  "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+    borderColor: "green"
+  }
+};
 
+const invalidStyle = {
+  "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+    borderColor: "red"
+  }
+};
 const BookingCard = ({ bookingCardRef }) => {
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
@@ -85,7 +95,6 @@ const BookingCard = ({ bookingCardRef }) => {
       toast.error("Something happened, please try again");
     }
   };
-
   useEffect(() => {
     setFrom(departure);
     setTo(arrival);
@@ -183,7 +192,7 @@ const BookingCard = ({ bookingCardRef }) => {
           />
           <TextField
             type="date"
-            label="Depart Date"
+            label="Departure Date"
             value={departureDate} // Use the state variable as value
             onChange={(e) => setDepartureDate(e.target.value)} // Update state on change
             variant="outlined"
@@ -209,39 +218,28 @@ const BookingCard = ({ bookingCardRef }) => {
             </Select>
           </FormControl>
         </div>
-        <div className="" style={{ display: "flex", gap: 10 }}>
-          <div style={{ display: "flex", flexDirection: "column", height: 20 }}>
-            <TextField
-              fullWidth
-              variant="outlined"
-              size="small"
-              placeholder="Apply promo code"
-              onChange={(event) => {
-                setPromoCode(event.target.value);
-                checkPromoCode(event.target.value);
-              }}
-              style={{ height: 20, marginBottom: 25 }}
-            />
-            <div>
-              {isPromoValid !== null && (
-                <Typography
-                  variant="body2"
-                  color={isPromoValid ? "primary" : "error"}
-                >
-                  {promoMessage}
-                </Typography>
-              )}
-            </div>
-          </div>
-          <div className="flex justify-between px-1 pr-32 items-center border border-1.5 rounded-md border-gray-400">
-            <Typography style={{ marginRight: 10 }} variant="body1">
-              Price
+        <div className="grid grid-cols-4 gap-2">
+          <TextField
+            fullWidth
+            variant="outlined"
+            size="small"
+            placeholder="Apply promo code"
+            onChange={(event) => {
+              setPromoCode(event.target.value);
+              checkPromoCode(event.target.value);
+            }}
+            className={`border border-2 ${isPromoValid ? 'border-green' : 'border-red'}`}
+            sx={isPromoValid ? validStyle : invalidStyle}
+          />
+          <div className="flex items-center border border-1.5 rounded-md border-gray-400">
+            <Typography sx={{mr:3, ml:1.8}} variant="body1">
+              Price:
             </Typography>
-            <Typography style={{ marginRight: 15 }}>
-              {discountedPrice ? discountedPrice : "---"}{" "}
+            <Typography  sx={{mr:3}}>
+              {discountedPrice ? discountedPrice : ""}{" "}
             </Typography>
             <div className="relative inline-block">
-              <span className="relative z-10">{price}</span>
+              <span className="relative z-10"> {discountedPrice == price ? "" : price}{" "}</span>
               <div className="absolute left-0 bottom-1/2 w-full h-0.5 bg-black"></div>
             </div>
           </div>

@@ -35,6 +35,8 @@ const Banner = ({ interval = 10000 }) => {
                     }
                 />
             ))}
+            <h2 className="absolute text-6xl font-bold top-1/3 pl-[13%] transform -translate-y-1/3 text-white ">MindSpace Airlines</h2>
+            <h2 className="absolute text-2xl font-bold top-1/2 pl-[13%] transform -translate-y-1/2 text-white">A Great way to Fly</h2>
             {isAuthenticated && <ChallengesPopover/>}
         </div>
     );

@@ -252,10 +252,16 @@ export default function FlightPicker({ bookingCardRef }) {
                   <div className="text-center mt-2">
                     {isClickable && priceDetails ? (
                       <div style={{ display: "flex", flexDirection: "column" }}>
-                        <div className="line-through">{`€${priceDetails.originalPrice}`}</div>
-                        <div className="ml-2 text-green-500">{`€${priceDetails.discountedPrice.toFixed(
-                          2
-                        )}`}</div>
+                        <div className="ml-2 text-green-500">
+                          {`€${priceDetails.discountedPrice.toFixed(2)}`}
+                        </div>
+                        {
+                          priceDetails.originalPrice === priceDetails.discountedPrice.toFixed(2)
+                            ?
+                            ""
+                            : <div className="line-through">{`€${priceDetails.originalPrice}`}</div>
+
+                        }
                       </div>
                     ) : null}
                   </div>
