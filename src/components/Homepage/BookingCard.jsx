@@ -35,6 +35,11 @@ const BookingCard = ({ bookingCardRef }) => {
     flightDetails;
 
   const checkPromoCode = async (code) => {
+    if (!code) {
+      setIsPromoValid(null);
+      setPromoMessage("");
+      return;
+    }
     try {
       const response = await api.get(`promo-code?code=${code}`, {
         headers: {
@@ -204,32 +209,39 @@ const BookingCard = ({ bookingCardRef }) => {
             </Select>
           </FormControl>
         </div>
-        <div className="grid-cols-4 gap-2 grid mb-4">
-          <TextField
-            fullWidth
-            variant="outlined"
-            size="small"
-            placeholder="Apply promo code"
-            onChange={(event) => {
-              setPromoCode(event.target.value);
-              checkPromoCode(event.target.value);
-            }}
-          />
-          <div>
-            {isPromoValid !== null && (
-              <Typography
-                variant="body2"
-                color={isPromoValid ? "primary" : "error"}
-              >
-                {promoMessage}
-              </Typography>
-            )}
+        <div className="" style={{ display: "flex", gap: 10 }}>
+          <div style={{ display: "flex", flexDirection: "column", height: 20 }}>
+            <TextField
+              fullWidth
+              variant="outlined"
+              size="small"
+              placeholder="Apply promo code"
+              onChange={(event) => {
+                setPromoCode(event.target.value);
+                checkPromoCode(event.target.value);
+              }}
+              style={{ height: 20, marginBottom: 25 }}
+            />
+            <div>
+              {isPromoValid !== null && (
+                <Typography
+                  variant="body2"
+                  color={isPromoValid ? "primary" : "error"}
+                >
+                  {promoMessage}
+                </Typography>
+              )}
+            </div>
           </div>
           <div className="flex justify-between px-1 pr-32 items-center border border-1.5 rounded-md border-gray-400">
-            <Typography variant="body1">Price</Typography>
-            <Typography>{price ? price : "---"} </Typography>
+            <Typography style={{ marginRight: 10 }} variant="body1">
+              Price
+            </Typography>
+            <Typography style={{ marginRight: 15 }}>
+              {discountedPrice ? discountedPrice : "---"}{" "}
+            </Typography>
             <div className="relative inline-block">
-              <span className="relative z-10">{discountedPrice}</span>
+              <span className="relative z-10">{price}</span>
               <div className="absolute left-0 bottom-1/2 w-full h-0.5 bg-black"></div>
             </div>
           </div>
