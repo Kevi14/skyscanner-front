@@ -9,6 +9,7 @@ import api from "../api/api.js";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthToken } from "../slice/authSlice.js";
 import { useNavigate } from "react-router-dom";
+import {toast} from "react-toastify";
 const initialValues = {
   email: "",
   password: "",
@@ -42,6 +43,7 @@ const Login = () => {
         // Handle successful login, e.g., store user data or redirect
         dispatch(setAuthToken(response.data.data.access));
         navigate("/");
+        toast.success("Logged in successfully")
       })
       .catch((err) => {
         // Handle login errors, e.g., display an error message
