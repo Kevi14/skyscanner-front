@@ -57,20 +57,6 @@ const BookingCard = ({ bookingCardRef }) => {
       setPromoMessage("Error checking promo code.");
     }
   };
-  const handleGetDiscounts = async () => {
-    try {
-      const response = await api.get("reward-info/generate_promo/", {
-        headers: {
-          Authorization: `Bearer ${access}`,
-          "Content-Type": "application/json",
-        },
-      });
-
-      console.log(JSON.parse(response.data.data));
-    } catch (error) {
-      console.error("Error fetching discount info:", error);
-    }
-  };
 
   const handleBooking = async () => {
     try {
@@ -252,14 +238,6 @@ const BookingCard = ({ bookingCardRef }) => {
             color="primary"
             size="large"
             onClick={handleBooking}
-          >
-            BUY NOW
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            onClick={handleGetDiscounts}
           >
             BUY NOW
           </Button>
