@@ -12,11 +12,12 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import {useDispatch, useSelector} from 'react-redux';
-const pages = [];
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {clearAuthToken} from "../slice/authSlice.js";
 import {Outlet, useNavigate} from 'react-router-dom';
 import {setSelectedTab} from "../slice/profileSlice.js";
 
+const pages = [];
 const NavBar = ()=>{
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -60,7 +61,7 @@ const NavBar = ()=>{
                     <Toolbar disableGutters>
                         <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} onClick={()=> navigate('/')} className="cursor-pointer" >
                             <img
-                                className="aspect-auto w-24 filter invert brightness-2"
+                                className="aspect-auto w-24 filter invert brightness-1"
                                 src="/mindspacelogo2.png"
                                 alt="logo"
                             />
@@ -68,7 +69,7 @@ const NavBar = ()=>{
 
                         <Box sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} >
                             <img
-                                className="aspect-auto w-24 filter invert brightness-2"
+                                className="aspect-auto w-24 filter invert brightness-1"
                                 src="/mindspacelogo2.png"
                                 alt="logo"
                             />
@@ -91,7 +92,7 @@ const NavBar = ()=>{
                                 <Box sx={{ flexGrow: 0 }}>
                                     <Tooltip title="Open profile">
                                         <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
-                                            <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg"/>
+                                            <AccountCircleIcon fontSize="large" sx={{color:"white"}}/>
                                         </IconButton>
                                     </Tooltip>
                                     <Menu

@@ -35,7 +35,7 @@ const BookingCard = ({ bookingCardRef }) => {
   const [to, setTo] = useState("");
   const [flightClass, setFlightClass] = useState("Economy");
   const [departureDate, setDepartureDate] = useState("");
-  const [promoCode, setPromoCode] = useState("");
+  const [promoCode, setPromoCode] = useState(null);
   const [isPromoValid, setIsPromoValid] = useState(null);
   const [promoMessage, setPromoMessage] = useState("");
 
@@ -229,7 +229,7 @@ const BookingCard = ({ bookingCardRef }) => {
               checkPromoCode(event.target.value);
             }}
             className={`border border-2 ${isPromoValid ? 'border-green' : 'border-red'}`}
-            sx={isPromoValid ? validStyle : invalidStyle}
+            sx={promoCode ? ( isPromoValid ? validStyle : invalidStyle ) : ""}
           />
           <div className="flex items-center border border-1.5 rounded-md border-gray-400">
             <Typography sx={{mr:3, ml:1.8}} variant="body1">
