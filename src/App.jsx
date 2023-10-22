@@ -11,6 +11,8 @@ import Register from "./pages/Register.jsx";
 import Rewards from "./pages/Rewards.jsx";
 import Footer from "./components/Shared/Footer.jsx";
 import Profile from "./pages/Profile.jsx";
+import {ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 function App() {
 
     const router = createBrowserRouter(
@@ -29,6 +31,7 @@ function App() {
     <>
         <RouterProvider router={router}/>
         <Footer />
+        <ToastContainer />
     </>
   )
 }
