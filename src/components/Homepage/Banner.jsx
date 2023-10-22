@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import ChallengesPopover from "../Shared/ChallengesPopover.jsx";
+import {useSelector} from "react-redux";
 
 const images = [
     '/banner2.jpg',
@@ -11,7 +13,7 @@ const images = [
 // eslint-disable-next-line react/prop-types
 const Banner = ({ interval = 10000 }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
-
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
     useEffect(() => {
         const slideInterval = setInterval(() => {
             setCurrentIndex(prevIndex => (prevIndex + 1) % images.length);
@@ -33,6 +35,7 @@ const Banner = ({ interval = 10000 }) => {
                     }
                 />
             ))}
+            {isAuthenticated && <ChallengesPopover/>}
         </div>
     );
 };

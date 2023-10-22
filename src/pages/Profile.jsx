@@ -8,7 +8,8 @@ import MyTickets from "../components/Profile/MyTickets.jsx";
 import Avatar from "@mui/material/Avatar";
 import {clearAuthToken} from "../slice/authSlice.js";
 import {useNavigate} from "react-router-dom";
-
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
+import Referals from "../components/Profile/Referals.jsx";
 const Profile = () => {
     const selectedTab = useSelector(state => state.profile.selectedTab)
     const dispatch = useDispatch()
@@ -22,21 +23,26 @@ const Profile = () => {
                 </Avatar>
                 <h2 className="text-2xl my-6">Admin admin</h2>
                 <div onClick={()=>{dispatch(setSelectedTab("userData"))}}
-                     className={`w-52 h-52 my-5 flex items-center justify-center border-2 cursor-pointer ${selectedTab === "userData" ? "bg-[#0D3A8A] border-white text-white" : "border-[#0D3A8A] text-[#0D3A8A] bg-white" }`}>
+                     className={`w-52 h-32 my-5 flex items-center justify-center border-2 cursor-pointer ${selectedTab === "userData" ? "bg-[#0D3A8A] border-white text-white" : "border-[#0D3A8A] text-[#0D3A8A] bg-white" }`}>
                     <div className="text-center text-2xl">
                         <AccountCircle /> User Data
                     </div>
                 </div>
-                <div onClick={()=>{dispatch(setSelectedTab("myTickets"))}}  className={`w-52 h-52 my-5 flex items-center justify-center border-2 border-[#0D3A8A] cursor-pointer ${selectedTab === "myTickets" ? "bg-[#0D3A8A] border-white text-white" : "border-[#0D3A8A] text-[#0D3A8A] bg-white" } `}>
+                <div onClick={()=>{dispatch(setSelectedTab("myTickets"))}}  className={`w-52 h-32 my-5 flex items-center justify-center border-2 border-[#0D3A8A] cursor-pointer ${selectedTab === "myTickets" ? "bg-[#0D3A8A] border-white text-white" : "border-[#0D3A8A] text-[#0D3A8A] bg-white" } `}>
                     <div className="text-center">
                         <LocalPlay /> My Tickets
+                    </div>
+                </div>
+                <div onClick={()=>{dispatch(setSelectedTab("referals"))}}  className={`w-52 h-32 my-5 flex items-center justify-center border-2 border-[#0D3A8A] cursor-pointer ${selectedTab === "referals" ? "bg-[#0D3A8A] border-white text-white" : "border-[#0D3A8A] text-[#0D3A8A] bg-white" } `}>
+                    <div className="text-center">
+                        <PersonAddAltIcon /> Referals
                     </div>
                 </div>
                 <div onClick={()=>{
                         navigate('/')
                         dispatch(clearAuthToken())
                     }}
-                     className="w-52 h-52 my-5 flex items-center justify-center border-2 border-[#0D3A8A] cursor-pointer "
+                     className="w-52 h-32 my-5 flex items-center justify-center border-2 border-[#0D3A8A] cursor-pointer "
                 >
                     <div className="text-center border-[#0D3A8A] text-[#0D3A8A]">
                         <Logout /> Logout
@@ -45,6 +51,7 @@ const Profile = () => {
             </div>
             {selectedTab === "userData" && <UserData />}
             {selectedTab === "myTickets" && <MyTickets />}
+            {selectedTab === "referals" && <Referals />}
 
 
         </Card>
