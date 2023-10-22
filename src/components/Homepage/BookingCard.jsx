@@ -32,7 +32,7 @@ const BookingCard = ({ bookingCardRef }) => {
 
   const handleGetDiscounts = async () => {
     try {
-      const response = await api.get("/discount_info/discount_info", {
+      const response = await api.get("reward-info/generate_promo/", {
         headers: {
           Authorization: `Bearer ${access}`,
           "Content-Type": "application/json",
@@ -196,7 +196,7 @@ const BookingCard = ({ bookingCardRef }) => {
             size="small"
             placeholder="Apply promo code"
           />
-          <div className="flex justify-between px-3 pr-32 items-center border border-1.5 rounded-md border-gray-400">
+          <div className="flex justify-between px-1 pr-32 items-center border border-1.5 rounded-md border-gray-400">
             <Typography variant="body1">Price</Typography>
             <Typography>{price ? price : "---"} </Typography>
             <div className="relative inline-block">
@@ -209,6 +209,14 @@ const BookingCard = ({ bookingCardRef }) => {
             color="primary"
             size="large"
             onClick={handleBooking}
+          >
+            BUY NOW
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            onClick={handleGetDiscounts}
           >
             BUY NOW
           </Button>
