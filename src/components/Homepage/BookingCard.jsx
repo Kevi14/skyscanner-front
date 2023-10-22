@@ -21,14 +21,14 @@ import { toast } from "react-toastify";
 const cities = ["New York City", "London", "Rome", "Tirana"];
 const validStyle = {
   "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-    borderColor: "green"
-  }
+    borderColor: "green",
+  },
 };
 
 const invalidStyle = {
   "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-    borderColor: "red"
-  }
+    borderColor: "red",
+  },
 };
 const BookingCard = ({ bookingCardRef }) => {
   const [from, setFrom] = useState("");
@@ -38,12 +38,23 @@ const BookingCard = ({ bookingCardRef }) => {
   const [promoCode, setPromoCode] = useState(null);
   const [isPromoValid, setIsPromoValid] = useState(null);
   const [promoMessage, setPromoMessage] = useState("");
+  const [currentPromoData, setCurrentPromoData] = useState(null);
 
   const access = useSelector((state) => state.auth.token); // Replace with your actual access token or its retrieval logic
   const flightDetails = useSelector((state) => state.flightDetails);
   const { departure, arrival, price, selectedDate, discountedPrice } =
     flightDetails;
 
+  let displayPrice = "";
+  if (currentPromoData && currentPromoData.point_consumed !== undefined) {
+    console.log("ASD");
+    const discount = currentPromoData.point_consumed / 10;
+    displayPrice = price - discount;
+  } else {
+    displayPrice = price;
+  }
+
+  console.log({ displayPrice });
   const checkPromoCode = async (code) => {
     if (!code) {
       setIsPromoValid(null);
@@ -60,9 +71,12 @@ const BookingCard = ({ bookingCardRef }) => {
       console.log(response.data.data);
       // assuming the response contains a 'valid' field that is a boolean
       if (response.data?.data.length > 0) {
+        setCurrentPromoData(response?.data?.data[0]);
         setIsPromoValid(true);
         setPromoMessage("Valid promo code!");
       } else {
+        setCurrentPromoData(null);
+
         setIsPromoValid(false);
         setPromoMessage("Invalid promo code!");
       }
@@ -228,18 +242,27 @@ const BookingCard = ({ bookingCardRef }) => {
               setPromoCode(event.target.value);
               checkPromoCode(event.target.value);
             }}
-            className={`border border-2 ${isPromoValid ? 'border-green' : 'border-red'}`}
-            sx={promoCode ? ( isPromoValid ? validStyle : invalidStyle ) : ""}
+            className={`border border-2 ${
+              isPromoValid ? "border-green" : "border-red"
+            }`}
+            sx={promoCode ? (isPromoValid ? validStyle : invalidStyle) : ""}
           />
           <div className="flex items-center border border-1.5 rounded-md border-gray-400">
-            <Typography sx={{mr:3, ml:1.8}} variant="body1">
+            <Typography sx={{ mr: 3, ml: 1.8 }} variant="body1">
               Price:
             </Typography>
-            <Typography  sx={{mr:3}}>
-              {discountedPrice ? discountedPrice : ""}{" "}
+            <Typography sx={{ mr: 3 }}>
+              {discountedPrice && !currentPromoData ? discountedPrice : ""}{" "}
+              {currentPromoData
+                ? parseFloat(price) -
+                  parseFloat(price) * (currentPromoData.points_consumed / 1000)
+                : ""}
             </Typography>
             <div className="relative inline-block">
-              <span className="relative z-10"> {discountedPrice == price ? "" : price}{" "}</span>
+              <span className="relative z-10">
+                {" "}
+                {discountedPrice == price ? "" : price}{" "}
+              </span>
               <div className="absolute left-0 bottom-1/2 w-full h-0.5 bg-black"></div>
             </div>
           </div>
