@@ -10,6 +10,7 @@ import api from "../api/api.js";
 import Card from "@mui/material/Card";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import {toast} from "react-toastify";
 const Register = () => {
   const [formData, setFormData] = useState({
     role: "customer",
@@ -70,10 +71,10 @@ const Register = () => {
     if (validateForm()) {
       try {
         const response = await api.post("auth/register", formData);
-        console.log("Form data submitted:", response);
+        toast.success("Registered successfully")
+        navigate('/login')
       } catch (error) {
-        console.error("Registration failed:", error);
-        // Handle registration failure (e.g., show an error message).
+        toast.error("Something went wrong please try again")
       }
     }
   };
